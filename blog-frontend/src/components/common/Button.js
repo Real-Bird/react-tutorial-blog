@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import palette from '../../lib/styles/palette';
+import { useNavigate } from 'react-router-dom';
+import palette from 'lib/styles/palette';
 
 const StyledButton = styled.button`
   border: none;
@@ -36,6 +37,13 @@ const StyledButton = styled.button`
     `}
 `;
 
-const Button = (props) => <StyledButton {...props} />;
+const Button = ({ to, ...rest }) => {
+  const navigate = useNavigate();
+  const onClick = (e) => {
+    if (to) return navigate(to);
+    if (rest.onClick) return rest.onClick(e);
+  };
+  return <StyledButton {...rest} onClick={onClick} />;
+};
 
 export default Button;

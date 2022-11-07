@@ -13,6 +13,7 @@ const [REGISTER, REGISTER_SUCCESS, REGISTER_FAILURE] =
   createRequestActionType('auth/REGISTER');
 const [LOGIN, LOGIN_SUCCESS, LOGIN_FAILURE] =
   createRequestActionType('auth/LOGIN');
+const AUTH_NULL = 'user/AUTH_NULL';
 
 export const changeField = createAction(
   CHANGE_FIELD,
@@ -32,6 +33,7 @@ export const login = createAction(LOGIN, ({ username, password }) => ({
   username,
   password,
 }));
+export const authNull = createAction(AUTH_NULL);
 
 const registerSaga = createRequestSaga(REGISTER, authAPI.register);
 const loginSaga = createRequestSaga(LOGIN, authAPI.login);
@@ -83,6 +85,10 @@ const auth = handleActions(
     [LOGIN_FAILURE]: (state, { payload: error }) => ({
       ...state,
       authError: error,
+    }),
+    [AUTH_NULL]: (state) => ({
+      ...state,
+      auth: null,
     }),
   },
   initialState,
