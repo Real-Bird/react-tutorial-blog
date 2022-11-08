@@ -14,7 +14,9 @@ const Wrapper = styled(Responsive)`
   height: 4rem;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  position: relative;
+  width: 90%;
   .logo {
     font-size: 1.125rem;
     font-weight: 800;
@@ -23,8 +25,10 @@ const Wrapper = styled(Responsive)`
     color: black;
   }
   .right {
+    position: absolute;
     display: flex;
     align-items: center;
+    right: 5%;
   }
 `;
 
