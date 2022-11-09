@@ -1,10 +1,13 @@
 import HeaderContainer from 'containers/common/HeaderContainer';
+import PaginationContainer from 'containers/posts/PaginationContainer';
+import PostsListContainer from 'containers/posts/PostsListContainer';
 
 const PostListPage = () => {
   return (
     <>
       <HeaderContainer />
-      <div>안녕하세요.</div>
+      <PostsListContainer />
+      <PaginationContainer />
     </>
   );
 };
