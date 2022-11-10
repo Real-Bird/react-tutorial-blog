@@ -1,5 +1,6 @@
 import PostList from 'components/posts/PostList';
 import { listPosts } from 'modules/posts';
+import { initialize } from 'modules/write';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useSearchParams } from 'react-router-dom';
@@ -16,7 +17,7 @@ const PostsListContainer = () => {
       user: user.user,
     }),
   );
-
+  const onNewPostInitialize = () => dispatch(initialize());
   useEffect(() => {
     const tag = searchParams.get('tag');
     const page = parseInt(searchParams.get('page'), 10) || 1;
@@ -28,6 +29,7 @@ const PostsListContainer = () => {
       error={error}
       posts={posts}
       showWriteButton={user}
+      onNewPostInitialize={onNewPostInitialize}
     />
   );
 };

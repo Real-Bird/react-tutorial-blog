@@ -58,7 +58,13 @@ const PostItem = ({ post }) => {
   );
 };
 
-const PostList = ({ posts, loading, error, showWriteButton }) => {
+const PostList = ({
+  posts,
+  loading,
+  error,
+  showWriteButton,
+  onNewPostInitialize,
+}) => {
   if (error) {
     return <PostListBlock>오류 발생!</PostListBlock>;
   }
@@ -66,7 +72,7 @@ const PostList = ({ posts, loading, error, showWriteButton }) => {
     <PostListBlock>
       <WritePostButtonWrapper>
         {showWriteButton && (
-          <Button cyan to="/write">
+          <Button cyan to="/write" onClick={onNewPostInitialize}>
             새 글 작성하기
           </Button>
         )}

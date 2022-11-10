@@ -4,6 +4,8 @@ import Quill from 'quill';
 import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import 'quill/dist/quill.bubble.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { setOriginalPost } from 'modules/write';
 
 const EditorBlock = styled(Responsive)`
   padding-top: 5rem;
@@ -33,6 +35,8 @@ const QuillWrapper = styled.div`
 `;
 
 const Editor = ({ title, body, onChangeField }) => {
+  const dispatch = useDispatch();
+  const { post } = useSelector(({ post }) => ({ post: post.post }));
   const quillElement = useRef(null);
   const quillInstance = useRef(null);
   useEffect(() => {
@@ -46,17 +50,28 @@ const Editor = ({ title, body, onChangeField }) => {
           [{ list: 'ordered' }, { list: 'bullet' }],
           ['blockquote', 'code-block', 'link', 'image'],
         ],
+        clipboard: {
+          matchVisual: false,
+        },
       },
     });
-    quillInstance.current.setContents([{ insert: '' }]);
+    if (post) {
+      dispatch(setOriginalPost(post));
+    }
     const quill = quillInstance.current;
     quill.on('text-change', (delta, oldDelta, source) => {
       if (source === 'user') {
         onChangeField({ key: 'body', value: quill.root.innerHTML });
       }
     });
-  }, [onChangeField]);
+  }, [onChangeField, dispatch, post]);
 
+  const mounted = useRef(false);
+  useEffect(() => {
+    if (mounted.current) return;
+    mounted.current = true;
+    quillInstance.current.root.innerHTML = body;
+  }, [body]);
   const onChangeTitle = (e) => {
     onChangeField({ key: 'title', value: e.target.value });
   };

@@ -13,12 +13,11 @@ const EditorContainer = () => {
     (payload) => dispatch(changeField(payload)),
     [dispatch],
   );
-
   useEffect(() => {
     return () => {
       dispatch(initialize());
     };
-  }, [dispatch]);
+  }, []);
   return <Editor onChangeField={onChangeField} title={title} body={body} />;
 };
 
